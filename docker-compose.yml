@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  flutter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flutter_dev
+    working_dir: /app
+    volumes:
+      - ./:/app:rw # 挂载项目目录
+      - flutter_cache:/sdks/flutter # 持久化 Flutter SDK
+      - android_sdk:/opt/android-sdk # 持久化 Android SDK
+    environment:
+      - FLUTTER_HOME=/sdks/flutter
+      - ANDROID_HOME=/opt/android-sdk
+      - PATH=/sdks/flutter/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:$PATH
+    command: >
+      bash -c "
+        flutter doctor || true &&
+        [ -f pubspec.yaml ] && flutter pub get || true &&
+        tail -f /dev/null
+      "
+    tty: true
+    stdin_open: true
+volumes:
+  flutter_cache:
+  android_sdk:
+
+
