@@ -6,12 +6,12 @@ Flutter Docker for Creating Apps
 移除旧容器和卷，避免缓存干扰：
 bash
 
-docker-compose down -v
+docker compose down -v
 
 构建并启动：
 bash
 
-docker-compose up --build -d
+docker compose up --build -d
 
 进入容器：
 bash
